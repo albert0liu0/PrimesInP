@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{hyperref}
+\usepackage{fontspec,xunicode}
+\usepackage{fontenc}
+\usepackage{titlesec}
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xeCJK}
+\usepackage{listings}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{mathtools}
+\usepackage{indentfirst}
+\usepackage{amssymb}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\setCJKmainfont{AR PL UKai TW}
+\lstset{basicstyle=\ttfamily,xleftmargin=24pt}
+\titleformat{\section}[hang]{\normalfont\LARGE\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}[hang]{\normalfont\large\bfseries}{　\thesubsection}{0.5em}{}
+\setlength\parindent{24pt}
+\setcounter{section}{-1}
+\newcommand{\nequiv}{\not\equiv}
+%\XeTeXlinebreaklocale "zh"
+%\usepackage{type1cm}
+\begin{document}
+\fontsize{12pt}{20pt}\selectfont
+\begin{center}
+	\bfseries\huge{Cryptography Final Report\\PRIMES is in P}\\
+\end{center}
+{
+    \hfill 臺灣大學 資訊工程學系 B04902012 劉瀚聲
+}
+\section{Notation}
+\section{Overview}
+\begin{mdframed}
+\noindent\textbf{Algorithm 1.1} 判定質數的算法
+\begin{lstlisting}[mathescape=true]
+0 Input: integer $n>1$.
+1 If $n=a^b$ for some $a\in\mathbb{N}$ and $b>1$, output COMPOSITE.
+2 Find the smallest $r$ such that $o_r(n)>\lg^2n$.
+3 If $1<(a,n)<n$ for some $a\leq r$, output COMPOSITE.
+4 If $n\leq r$, output PRIME.
+5 For $a$ from $1$ to $\floor{\sqrt{\phi(r)}\lg n}$ do:
+        If $(X+a)^n\nequiv X^n+a \pmod{X^r-1, n}$, output COMPOSITE.
+6 Output PRIME.
+\end{lstlisting}
+\end{mdframed}
+
+\begin{mdframed}
+\noindent\textbf{Theorem 1.2} 當算法1.1輸出 \texttt{COMPOSITE}時，$n$為合數
+\end{mdframed}
+
+    第2節為定理1.2之證明。
+
+\begin{mdframed}
+\noindent\textbf{Theorem 1.3} 當算法1.1輸出 \texttt{PRIME}時，$n$為質數
+\end{mdframed}
+
+    第3節為定理1.3之證明。
+
+\begin{mdframed}
+\noindent\textbf{Theorem 1.4} 算法1.1的時間複雜度為 \(O(\lg^{12}n)\)
+\end{mdframed}
+    
+    第4節為定理1.4之證明。
+
+    定理1.2及定理1.3保證了算法的正確性。而由於輸入規模為$\lg n$，定理1.4保證了算法的運行時間為多項式時間。故算法1.1是一個PRIME的多項式時間算法。
+
+\section{Correctness When Output COMPOSITE}
+
+    當算法在第1步或第3步輸出COMPOSITE時，$n$是合數，因為第1步的$a$和第3步的$(a,n)$會是一個$n$的非平凡因數。
+
+\begin{mdframed}
+\noindent\textbf{Lemma 2.1} $a\in\mathbb{Z}$，$n\in\mathbb{N}$，$n\geq 2$，$(a,n)=1$，那麼$n$為質數若且唯若\\
+    \centerline{$(X+a)^n\equiv X^n+a \pmod{n}$}
+\end{mdframed}
+
+    當算法在第5步輸出COMPOSITE時，表示$(X+a)^n\nequiv X^n+a \pmod{X^r-1, n}$，因此$(X+a)^n\nequiv X^n+a \pmod{n}$。根據引理2.1，$n$為合數。
+
+\noindent\textit{2.1 Proof to Lemma 2.1} 
+
+    根據二項式定理，$\forall 0<i<n$，$(X+a)^n$中$X^i$的係數為$C^n_ia^{n-i}$，而$X^n$的係數顯然同餘。
+
+    \noindent (1) $n$為質數
+    
+        由於$\forall 0<i<n$，$C^n_i=\dfrac{n!}{i!(n-i)!}$，$n\mid(n!)$，$n\nmid(i!(n-i)!)$，故$C^n_ia^{n-i}\equiv 0\pmod{n}$。根據費瑪小定理，$a^n\equiv a\pmod{n}$。故$(X+a)^n\equiv X^n+a \pmod{n}$。
+
+    \noindent (2) $n$為合數
+
+        對於$n$的任何一個質因數$q$，若$q^k\mid n$但$q^{k+1}\nmid n$，那麼由於$C^n_q=\dfrac{n(n-1)...(n-q+1)}{q(q-1)(q-2)...(1)}$，而$q^k\nmid\dfrac{n}{q}$，且分子及分母中之其他項皆與$q$互質，故$n\nmid C^n_q$。亦即，$C^n_qa^{n-q}\not\equiv 0\pmod{n}$。
+
+\section{Correctness When Output PRIME}
+
+    當算法在第4步輸出PRIME時，$n$為質數。因為第3步和$n\leq r$保證了$\forall a<n$，$(a,n)=1$。以下證明算法在第6步輸出PRIME的正確性。
+
+    由於$o_r(n)>1$，$n$必定有質因數$p$滿足$o_r(p)>1$。又因為通過了第3步和第4步的檢驗，所以$(r,n)=1$，且$p>r$，故$p,n\in \mathbb{Z}_r^*$。另外，令$l=\floor{\sqrt{\phi(r)}\lg n}$。在第5步中，算法檢驗了$l$個等式。由於第5步沒有輸出COMPOSITE，因此對於所有的$0\leq a\leq l$，都有：\\
+    \centerline{$(X+a)^n\equiv X^n+a\pmod{X^r-1, n}$}\\
+由於$p$是$n$的因數，故：\\
+    \centerline{$(X+a)^n\equiv X^n+a\pmod{X^r-1, n}$}\\
+
+\begin{mdframed}
+\noindent\textbf{Lemma 3.1} $(X+a)^{\frac{n}{p}}\equiv X^{\frac{n}{p}}+a\pmod{X^r-1, p}$。
+\end{mdframed}
+
+    對於多項式函數$f$和自然數$m$，定義$m$對於$f$是introspective，如果$f(X)^m\equiv f(X^m)\pmod{X^r-1, p}$。由上面的敘述可知，對於$(X+a)$，$n$、$p$、$\dfrac{n}{p}$都是introspective。
+
+\begin{mdframed}
+\noindent\textbf{Lemma 3.2} 如果$m_1$、$m_2$對於$f(X)$都是introspective，那麼$m_1m_2$對於$f(X)$也是introspective。
+\end{mdframed}
+
+\begin{mdframed}
+\noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是introspective，那麼$m$對於$f_1(X)f_2(X)$也是introspective。
+\end{mdframed}
+
+    接下來考慮以下幾個集合：令$I={p^i\dfrac{n}{p}^j|i, j\geq 0}$，令$P={\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0}$。
+
+\section{Time Complexity of Algorithm}
+
+    第1步枚舉$b$自$1$至$\lg n$，二分搜尋對應的$a$，檢驗$a^b$與$n$的關係。時間複雜度$O(\lg^3n)$。
+
+    第2步自1開始枚舉$r$，檢驗是否$\forall 1\leq i\leq\lg^2n$，$n^i\nequiv 1\pmod{r}$。時間複雜度$O(r\lg n)$。
+
+    第3步枚舉$a$自$1$至$r$，計算$(a,n)$。時間複雜度$O(r\lg n)$。
+
+    第4步時間複雜度$O(1)$。
+
+    第5步每次迭代可用快速冪在$\lg n$次多項式乘法內算出$(X+a)^n\pmod{X^r-1, n}$的值，而多項式的次數不超過$r$，故時間複雜度為$O((\sqrt{\phi(r)}\lg n)(r^2\lg n))=O(r^{\frac{5}{2}}\lg^2n)$。
+
+    第6步時間複雜度$O(1)$。
+
+    故整體時間瓶頸為第5步，複雜度為$O(r^{\frac{5}{2}}\lg^2n)$。故只須證明$r$的上界。
+
+    令$B=\ceil{\lg^5n}$，$S=n^{\floor{\lg B}}\prod\limits_{i=1}^{\floor{\lg^2n}}(n^i-1)$。
+
+    $S<n^{\floor{\lg B}}\prod\limits_{i=1}^{\floor{\lg^2n}}(n^i)=n^{\floor{\lg B}+\frac{1}{2}\lg^2n(\lg^2n-1)}\leq n^{\lg^4n}\leq 2^B$。
+
+    考慮$R=min\{R'|R'\nmid S\}$，由於$\forall i\in[1, \floor{\lg^2n}], R\nmid(n^i-1)$，故$o_R(n)>\lg^2n$，亦即$R$是$r$的一個上界。
+
+\begin{mdframed}
+\noindent\textbf{Lemma 4.1} \textit{(Nair [1])} 令$LCM(m)$表示前$m$個自然數的最小公倍數，那麼對於$m\geq 7$，$LCM(m)\geq 2^m$。
+\end{mdframed}
+
+    假設$R>B$，那麼$\forall i\leq B$，$i\mid S$，亦即$S\mid LCM(B)$，但根據引理4.1，$LCM(B)\geq 2^B>S$，矛盾，故$R\leq B$。從而，$r\leq \lg^5n$，定理得證。
+
+\section{References}
+
+    [1] M. Nair. On Chebyshev-type inequalities for primes. \textit{Amer. Math. Monthly} 89:126 129, 1982.
+    
+\end{document}　

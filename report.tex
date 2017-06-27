@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 \usepackage{hyperref}
+\usepackage{calrsfs}
 \usepackage{fontspec,xunicode}
 \usepackage{fontenc}
 \usepackage{titlesec}
@@ -23,6 +24,8 @@
 \setlength\parindent{24pt}
 \setcounter{section}{-1}
 \newcommand{\nequiv}{\not\equiv}
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+\newcommand{\Gc}{\pazocal{G}}
 %\XeTeXlinebreaklocale "zh"
 %\usepackage{type1cm}
 \begin{document}
@@ -105,17 +108,17 @@
 \noindent\textbf{Lemma 3.1} $(X+a)^{\frac{n}{p}}\equiv X^{\frac{n}{p}}+a\pmod{X^r-1, p}$。
 \end{mdframed}
 
-    對於多項式函數$f$和自然數$m$，定義$m$對於$f$是introspective，如果$f(X)^m\equiv f(X^m)\pmod{X^r-1, p}$。由上面的敘述可知，對於$(X+a)$，$n$、$p$、$\dfrac{n}{p}$都是introspective。
+    對於多項式函數$f$和自然數$m$，定義$m$對於$f$是冪同構的，如果$f(X)^m\equiv f(X^m)\pmod{X^r-1, p}$。由上面的敘述可知，對所有的$0\leq a\leq l$，$n$、$p$、$\dfrac{n}{p}$對於$(X+a)$都是冪同構的。
 
 \begin{mdframed}
-\noindent\textbf{Lemma 3.2} 如果$m_1$、$m_2$對於$f(X)$都是introspective，那麼$m_1m_2$對於$f(X)$也是introspective。
+\noindent\textbf{Lemma 3.2} 如果$m_1$、$m_2$對於$f(X)$都是冪同構的，那麼$m_1m_2$對於$f(X)$也是冪同構的。
 \end{mdframed}
 
 \begin{mdframed}
-\noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是introspective，那麼$m$對於$f_1(X)f_2(X)$也是introspective。
+\noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是冪同構的，那麼$m$對於$f_1(X)f_2(X)$也是冪同構的。
 \end{mdframed}
 
-    接下來考慮以下幾個集合：令$I={p^i\dfrac{n}{p}^j|i, j\geq 0}$，令$P={\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0}$。
+    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同構的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個集合，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。
 
 \section{Time Complexity of Algorithm}
 
@@ -137,7 +140,7 @@
 
     $S<n^{\floor{\lg B}}\prod\limits_{i=1}^{\floor{\lg^2n}}(n^i)=n^{\floor{\lg B}+\frac{1}{2}\lg^2n(\lg^2n-1)}\leq n^{\lg^4n}\leq 2^B$。
 
-    考慮$R=min\{R'|R'\nmid S\}$，由於$\forall i\in[1, \floor{\lg^2n}], R\nmid(n^i-1)$，故$o_R(n)>\lg^2n$，亦即$R$是$r$的一個上界。
+    考慮$R=\min\{R'|R'\nmid S\}$，由於$\forall i\in[1, \floor{\lg^2n}], R\nmid(n^i-1)$，故$o_R(n)>\lg^2n$，亦即$R$是$r$的一個上界。
 
 \begin{mdframed}
 \noindent\textbf{Lemma 4.1} \textit{(Nair [1])} 令$LCM(m)$表示前$m$個自然數的最小公倍數，那麼對於$m\geq 7$，$LCM(m)\geq 2^m$。

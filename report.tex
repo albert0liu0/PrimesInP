@@ -42,11 +42,16 @@
 
     為了證明自己有學到東西，這篇報告是用中文寫成，至少能表示有理解論文的內容而不是抄襲而得。此外，也把證明的架構改成自己比較喜歡的形式。我所讀過的論文，大多是 Top-down 的架構。在這篇報告中，定理會在後面的其他節證明，而引理會在當節的最後證明。如此一來，讀者在熟悉整個證明之前，便可以先了解證明的架構、知道每一個定理與引理在證明中的地位，之後再選擇想了解的定理與引理閱讀其證明。
 
-    在開始寫起這篇報告後，才發現貫徹這些原則有許多困難：用中文寫數學證明實在是太痛苦了。一來是用英文思考再翻成中文往往很奇怪，二來是論文中有一些作者自己創造的專有名詞（如 "introspective"，意譯成自省函數很奇怪，但原封不動的將英文單字夾在中文報告中又顯得突兀。幾經思索，決定按照函數的特性，擅自翻譯成冪同構）等等，果然還是好想用英文寫啊。
+    在開始寫起這篇報告後，才發現貫徹這些原則有許多困難：用中文寫數學證明實在是太痛苦了。一來是用英文思考再翻成中文往往很奇怪，二來是論文中有一些作者自己創造的專有名詞（如 "introspective"，意譯成自省函數很奇怪，但原封不動的將英文單字夾在中文報告中又顯得突兀。幾經思索，決定按照函數的特性，擅自翻譯成冪同態）等等，果然還是好想用英文寫啊。
 
-    正如我的專題指導教授所言，易寫則難讀，易讀則難寫。期許我的這篇報告費盡心思的結果，能讓所有想認識這個演算法的讀者快速了解，並相信其正確性及時間複雜度。
+    正如我的專題指導教授所言，易寫則難讀，易讀則難寫。期許我的這篇報告費盡心思的結果，能讓所有想認識這個演算法的讀者快速了解其運作及正確性。
+
+    整個演算法以定理2.1為核心。事實上，定理2.1已經提供了一個顯然充分的質數判別法：枚舉$[0,n-1]$中的所有$a$，並檢驗\\
+    \centerline{$(X+a)^n\equiv X^n+a \pmod{n}$}\\
+    是否成立，但這樣一來迭代的次數就高達$n$次，而且$n$次多項式的乘法與比較需要的時間也是$O(n)$，但輸入規模是$O(\lg n)$。在這個算法中，解決迭代次數過多的方法是將$a$的範圍縮減到$[0,l]$，而解決多項式次數過高的方法是在模$(X^r-1)$的剩餘類環上進行運算和比較。但如此一來，這個算法作為質數檢驗法的充分性就不再顯然，而$l$和$r$的上界也需要證明。
+
 \section{Notation}
-\section{Overview}
+\section{Algorithm and Proof Sketch}
 \begin{mdframed}
 \noindent\textbf{Algorithm 1.1} 判定質數的算法
 \begin{lstlisting}[mathescape=true]
@@ -117,17 +122,17 @@
 \noindent\textbf{Lemma 3.1} $(X+a)^{\frac{n}{p}}\equiv X^{\frac{n}{p}}+a\pmod{X^r-1, p}$。
 \end{mdframed}
 
-    對於多項式函數$f$和自然數$m$，定義$m$對於$f$是冪同構的，如果$f(X)^m\equiv f(X^m)\pmod{X^r-1, p}$。由上面的敘述可知，對所有的$0\leq a\leq l$，$n$、$p$、$\dfrac{n}{p}$對於$(X+a)$都是冪同構的。
+    對於多項式函數$f$和自然數$m$，定義$m$對於$f$是冪同態的，表示$f(X)^m\equiv f(X^m)\pmod{X^r-1, p}$。由上面的敘述可知，對所有的$0\leq a\leq l$，$n$、$p$、$\dfrac{n}{p}$對於$(X+a)$都是冪同態的。
 
 \begin{mdframed}
-\noindent\textbf{Lemma 3.2} 如果$m_1$、$m_2$對於$f(X)$都是冪同構的，那麼$m_1m_2$對於$f(X)$也是冪同構的。
+\noindent\textbf{Lemma 3.2} 如果$m_1$、$m_2$對於$f(X)$都是冪同態的，那麼$m_1m_2$對於$f(X)$也是冪同態的。
 \end{mdframed}
 
 \begin{mdframed}
-\noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是冪同構的，那麼$m$對於$f_1(X)f_2(X)$也是冪同構的。
+\noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是冪同態的，那麼$m$對於$f_1(X)f_2(X)$也是冪同態的。
 \end{mdframed}
 
-    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同構的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個群，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。由於$o_r(n)>\lg^2n$，故$t>\lg^2n$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。令$\Gc$為$P$模$h(X)$再把係數模$p$得到的集合。由於$h(X)$不可約，故$\Gc$是一個乘法群。$\Gc$可以看作是由$X$、$(X+1)$、$(X+2)$、......、$(X+l)$所生成的、在$\mathbb{F}_p/h(X)$上的乘法群。
+    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同態的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個群，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。由於$o_r(n)>\lg^2n$，故$t>\lg^2n$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。令$\Gc$為$P$模$h(X)$再把係數模$p$得到的集合。由於$h(X)$不可約，故$\Gc$是一個乘法群。$\Gc$可以看作是由$X$、$(X+1)$、$(X+2)$、......、$(X+l)$所生成的、在$\mathbb{F}_p/h(X)$上的乘法群。
 
 \begin{mdframed}
 \noindent\textbf{Lemma 3.4} $|\Gc|\geq\binom{t+l}{t-1}$。
@@ -137,7 +142,26 @@
 \noindent\textbf{Lemma 3.5} 若$n$不是$p$的冪次，則$|\Gc|\leq n^{\sqrt{t}}$。
 \end{mdframed}
 
-    根據引理3.4，\\
+    根據引理3.4，
+        \begin{align*}
+        |\Gc| &\geq \binom{t+l}{t-1}\\
+              &\geq \binom{l+1+\floor{\sqrt{t}\lg n}}{\floor{\sqrt{t}\lg n}}\\
+              &\geq \binom{2\floor{\sqrt{t}\lg n}+1}{\floor{\sqrt{t}\lg n}}\\
+              &> 2^{\floor{\sqrt{t}\lg n}+1}\\
+              &\geq n^{\sqrt{t}}\\
+        \end{align*}
+
+    故根據引理3.5，$n$為$p$的冪次。但由於第1步沒有輸出COMPOSITE，故$n=p$，即$n$是個質數，定理得證。
+
+\noindent\textit{3.1 Proof to lemma 3.1}
+
+\noindent\textit{3.2 Proof to lemma 3.2}
+
+\noindent\textit{3.3 Proof to lemma 3.3}
+
+\noindent\textit{3.4 Proof to lemma 3.4}
+
+\noindent\textit{3.5 Proof to lemma 3.5}
 
 \section{Time Complexity of Algorithm}
 

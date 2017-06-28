@@ -36,6 +36,9 @@
 {
     \hfill 臺灣大學 資訊工程學系 B04902012 劉瀚聲
 }
+    在得知這學期的密碼學報告可以自選相關主題時，腦海中浮現的第一選擇，便是這篇「PRIMES is in P」。質數在大多數的密碼系統中，往往是相當重要的一環。身為一個資工系學生，目前的研究領域又是關於演算法與複雜度，這篇論文一直在我的 Wishing List 的前幾位。PRIMES屬於coNP相當顯然，但PRIMES在NP內並不直觀。可以想像，這篇論文的在2002年的發表震驚了多少猜測 PRIMES 屬於 NP-Complete 或 coNP-Complete 的學者。
+
+    一些教授和網路上大多數的網友對這篇論文的評價都是「直白易懂」、「半小時內可以讀完」之類。但我親自讀之後，並不覺得它有傳聞中的那麼簡單。除了某些引理用到了一些我不曾學過的定義和性質（如分圓多項式等），相對影響較大的，是裡面某些推導或敘述並沒有給出詳細的原因，試著把敘述的正確性證明一次，卻發現原因並不顯然等諸如此類的情況。
 \section{Notation}
 \section{Overview}
 \begin{mdframed}
@@ -118,7 +121,17 @@
 \noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是冪同構的，那麼$m$對於$f_1(X)f_2(X)$也是冪同構的。
 \end{mdframed}
 
-    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同構的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個集合，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。令$\Gc$為$P$模$h(X)$再把係數模$p$得到的集合。由於$h(X)$不可約，故$\Gc$是一個乘法群。$\Gc$可以看作是由$X$、$(X+1)$、$(X+2)$、......、$(X+l)$所生成的、在$\mathbb{F}_p/h(X)$上的乘法群。
+    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同構的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個群，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。由於$o_r(n)>\lg^2n$，故$t>\lg^2n$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。令$\Gc$為$P$模$h(X)$再把係數模$p$得到的集合。由於$h(X)$不可約，故$\Gc$是一個乘法群。$\Gc$可以看作是由$X$、$(X+1)$、$(X+2)$、......、$(X+l)$所生成的、在$\mathbb{F}_p/h(X)$上的乘法群。
+
+\begin{mdframed}
+\noindent\textbf{Lemma 3.4} $|\Gc|\geq\binom{t+l}{t-1}$。
+\end{mdframed}
+
+\begin{mdframed}
+\noindent\textbf{Lemma 3.5} 若$n$不是$p$的冪次，則$|\Gc|\leq n^{\sqrt{t}}$。
+\end{mdframed}
+
+    根據引理3.4，\\
 
 \section{Time Complexity of Algorithm}
 

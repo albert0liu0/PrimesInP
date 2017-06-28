@@ -118,7 +118,7 @@
 \noindent\textbf{Lemma 3.3} 如果$m$對於$f_1(X)$、$f_2(X)$都是冪同構的，那麼$m$對於$f_1(X)f_2(X)$也是冪同構的。
 \end{mdframed}
 
-    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同構的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個集合，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。
+    接下來考慮以下幾個集合：令$I=\{p^i(\dfrac{n}{p})^j|i, j\geq 0\}$，$P=\{\prod\limits_{a=0}^{l}(X+a)^{e_a}|e_a\geq 0\}$。根據引理3.2和3.3，$I$中的每一個元素對於$P$中的每一個元素都是冪同構的。由於$n$、$p$、$\dfrac{n}{p}$都分別和$r$互質，故$I$模$r$所形成的集合會在$\mathbb{Z}_r^*$內，而且是一個群。令$G$為那個集合，亦即，$G=I/r\mathbb{Z}=\{p^i(\dfrac{n}{p})^j \mod r|i, j\geq 0\}$，並令$t=|G|$。令$Q_r(X)$為$r$次分圓多項式，根據分圓多項式的性質，$Q_r(X)\mid (X^r-1)$，且在$\mathbb{F}_p$上，$Q_r(X)$是若干個$o_r(p)$次不可約多項式的乘積。令$h(X)$是其中一個這樣的多項式。由於$o_r(p)>1$，故$deg(h(X))>1$。令$\Gc$為$P$模$h(X)$再把係數模$p$得到的集合。由於$h(X)$不可約，故$\Gc$是一個乘法群。$\Gc$可以看作是由$X$、$(X+1)$、$(X+2)$、......、$(X+l)$所生成的、在$\mathbb{F}_p/h(X)$上的乘法群。
 
 \section{Time Complexity of Algorithm}
 

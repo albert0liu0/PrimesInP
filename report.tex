@@ -24,6 +24,7 @@
 \setlength\parindent{24pt}
 \setcounter{section}{-1}
 \newcommand{\nequiv}{\not\equiv}
+\newcommand{\Ih}{\hat{I}}
 \DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
 \newcommand{\Gc}{\pazocal{G}}
 \setlength{\abovedisplayskip}{0pt}
@@ -169,15 +170,55 @@
     假設$z^p(X)\equiv 0\pmod{X^r-1,p}$，那麼存在多項式$q(X)$使得$z^p(X)\equiv q(X)(X^r-1)\pmod{p}$。若$(X^r-1)\nmid z(X)$，那麼$(X^r-1)$必有重數大於$1$的因式。亦即存在多項式$q_1(X)$、$q_2(X)$滿足$(X^r-1)\equiv [q_1(X)]^2q_2(X)\pmod{p}$，且$\deg(q_1(X))>1$。但考慮$(X^r-1)$之形式微分：$(X^r-1)'\equiv rX^{r-1}\pmod{p}$，$([q_1(X)]^2q_2(X))'\equiv 2q_1(X)q_1'(X)q_2(X)+[q_1(X)^2q_2'(X)\pmod{p}$。但$(X^r-1,(X^r-1)')\equiv 1\pmod{p}$，$q_1(X)\mid([q_1(X)]^2q_2(X), ([q_1(X)]^2q_2(X))')$，矛盾，故$(X^r-1)\mid z(X)$，即引理得證。
 
 \noindent\textit{3.2 Proof to lemma 3.2}
-    \begin{align*}
-    [f(X)]^{m_1m_2}&\equiv [f(X^{m_1})]^{m_2}\\
-    \end{align*}
+
+    $[f(X)]^{m_1m_2}\equiv [f(X^{m_1})]^{m_2}\pmod{X^r-1,p}$
+
+    $[f(X^{m_1})]^{m_2}\equiv f(X^{m_1m_2})\pmod{X^{rm_1}-1,p}$
+
+    由於$(X^r-1)\mid(X^{rm_1}-1)$，故\\
+    \centerline{$[f(X)]^{m_1m_2}\equiv f(X^{m_1m_2})\pmod{X^r-1,p}$，}\\
+    引理得證。
 
 \noindent\textit{3.3 Proof to lemma 3.3}
 
+    $[f_1(X)^m\equiv f_1(X^m)\pmod{X^r-1,p}$，
+
+    $[f_2(X)^m\equiv f_2(X^m)\pmod{X^r-1,p}$，
+    
+    故\\
+    \centerline{$[f_1(X)f_2(X)]^m\equiv f_1(X^m)f_2(X^m)\pmod{X^r-1,p}$，}\\
+    引理得證。
+
 \noindent\textit{3.4 Proof to lemma 3.4}
 
+    令$F=\mathbb{F}_p[X]/(h(X))$。由於$h(X)\mid Q_r(X)$，根據分圓多項式的性質，$r$為最小的自然數滿足在$F$上$X^r=1$。
+
+    以下證明$P$中任兩個相異的、低於$t$次的多項式，在$F$上也相異。
+
+    令$f(X)$和$g(X)$就是兩個這樣的多項式，亦即，$f(X)$、$g(X)\in P$，$f(X)\neq g(X)$，$\max(\deg(f(X)),\deg(g(X)))<t$。假設在$F$上，$f(X)=g(X)$。
+
+    令$m\in I$，顯然在$F$上$[f(X)]^m=[g(X)]^m$。由於$m$對於$f(X)$和$g(X)$都是冪同構的，而且$h(X)\mid (X^r-1)$，故在$F$上，$f(X^m)=g(X^m)$。這表示對所有的$m\in G$，$(X^m)$都是$f(Y)-g(Y)=0$的一個根。以下證明這$|G|=t$個根全部相異。
+    
+    假設有相異的$m_1$、$m_2\in G$，滿足在$F$上$X^{m_1}=X^{m_2}$。不失一般性假設$m_1>m_2$，那麼$X^{m_1-m_2}=1$。但注意到由於$G$為$\mathbb{Z}_r^*$的子群，導致$(m_1-m_2)<r$，這與證明開頭提到的$r$的最小性矛盾。故那$t$個根全部相異。
+
+    但$\deg(f(Y)-g(Y))<t$，與他有$t$個相異根矛盾，故$P$中任兩個相異的、低於$t$次的多項式，在$F$上也相異。
+
+    $P$中低於$t$次多項式的個數，與方程$\sum\limits_{a=0}^{l}e_a\leq t-1$的非負整數解的個數相同。令$d=(t-1)-\sum\limits_{a=0}^{l}e_a$，那麼該方程解的個數又與$\sum\limits_{a=0}^{l}e_a+d=t-1$的非負整數解的個數相同，為$H_{t-1}^{l+2}=\binom{t+l}{t-1}$。由於這$\binom{t+l}{t-1}$在$F$上也全部相異，故$\Gc$中也至少有$\binom{t+l}{t-1}$個相異元素。引理得證。
+
 \noindent\textit{3.5 Proof to lemma 3.5}
+
+    考慮$I$的子集$\Ih={p^i(\frac{n}{p})^j|i,j\leq\floor{\sqrt{t}}}$。
+    
+    若$n$不是$p$的冪次，那麼$\Ih$中的元素全部相異，$|\Ih|=(\floor{\sqrt{t}}+1)^2>t$。由於$|G|=t<|\Ih|$，故$\Ih$中必定有相異元素$m_1$和$m_2$模$r$同餘。不失一般性，假設$m_1>m_2$。那麼，\\
+    \centerline{$X^{m_1}\equiv X^{m_2}\pmod{X^r-1}$。}
+
+    令$f(X)\in P$。
+    \begin{align*}
+    [f(X)]^{m_1}&\equiv f(X^{m_1})\\
+                &\equiv f(X^{m_2})\\
+                &\equiv [f(X)]^{m_2}
+    \end{align*}
+    亦即，在$F$上，$[f(X)]^{m_1}=[f(X)]^{m_2}$，故在$F$上，對於所有的$f(X)\in\Gc$，$f(X)$都是$Y^{m_1}-Y^{m_2}=0$的根。但注意到$\deg(Y^{m_1}-Y^{m_2})=m_1\leq(\frac{n}{p}\times p)^{\floor{\sqrt{t}}}\leq n^{\sqrt{t}}$，最多只有$n^{\sqrt{t}}$個根，故$|\Gc|\leq n^{\sqrt{t}}$。定理得證。
 
 \section{Time Complexity of Algorithm}
 

@@ -26,6 +26,10 @@
 \newcommand{\nequiv}{\not\equiv}
 \DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
 \newcommand{\Gc}{\pazocal{G}}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
 %\XeTeXlinebreaklocale "zh"
 %\usepackage{type1cm}
 \begin{document}
@@ -148,14 +152,26 @@
               &\geq \binom{l+1+\floor{\sqrt{t}\lg n}}{\floor{\sqrt{t}\lg n}}\\
               &\geq \binom{2\floor{\sqrt{t}\lg n}+1}{\floor{\sqrt{t}\lg n}}\\
               &> 2^{\floor{\sqrt{t}\lg n}+1}\\
-              &\geq n^{\sqrt{t}}\\
+              &\geq n^{\sqrt{t}}
         \end{align*}
-
     故根據引理3.5，$n$為$p$的冪次。但由於第1步沒有輸出COMPOSITE，故$n=p$，即$n$是個質數，定理得證。
 
 \noindent\textit{3.1 Proof to lemma 3.1}
+    \begin{align*}
+    (X^{\frac{n}{p}}+a)^p&\equiv X^n+a\\
+                         &\equiv ((X+a)^{\frac{n}{p}})^p\pmod{X^r-1,p}
+    \end{align*}
+
+    故只須證明對於多項式$f(X)$、$g(X)\in \mathbb{Z}_{p}[X]/(X^r-1)$，$f^p(X)\equiv g^p(X)\pmod{X^r-1,p}\Rightarrow f(X)\equiv g(X)\pmod{X^r-1,p}$。
+
+    但$f^p(X)-g^p(X)\equiv 0\pmod{X^r-1,p}\Rightarrow (f(X)-g(X))^p\equiv 0\pmod{X^r-1,p}$（證明類似定理2.1的證明，展開後觀察係數）。故進一步，只須證明$(f(X)-g(X))^p\equiv 0\pmod{X^r-1,p}\Rightarrow(f(X)-g(X))\equiv 0\pmod{X^r-1,p}$。其充分條件是對於多項式$z(X)\in\mathbb{Z}_{p}[X]/(X^r-1)$，$z^p(X)\equiv 0\pmod{X^r-1,p}\Rightarrow z(X)\equiv 0\pmod{X^r-1,p}$。
+
+    假設$z^p(X)\equiv 0\pmod{X^r-1,p}$，那麼存在多項式$q(X)$使得$z^p(X)\equiv q(X)(X^r-1)\pmod{p}$。若$(X^r-1)\nmid z(X)$，那麼$(X^r-1)$必有重數大於$1$的因式。亦即存在多項式$q_1(X)$、$q_2(X)$滿足$(X^r-1)\equiv [q_1(X)]^2q_2(X)\pmod{p}$，且$\deg(q_1(X))>1$。但考慮$(X^r-1)$之形式微分：$(X^r-1)'\equiv rX^{r-1}\pmod{p}$，$([q_1(X)]^2q_2(X))'\equiv 2q_1(X)q_1'(X)q_2(X)+[q_1(X)^2q_2'(X)\pmod{p}$。但$(X^r-1,(X^r-1)')\equiv 1\pmod{p}$，$q_1(X)\mid([q_1(X)]^2q_2(X), ([q_1(X)]^2q_2(X))')$，矛盾，故$(X^r-1)\mid z(X)$，即引理得證。
 
 \noindent\textit{3.2 Proof to lemma 3.2}
+    \begin{align*}
+    [f(X)]^{m_1m_2}&\equiv [f(X^{m_1})]^{m_2}\\
+    \end{align*}
 
 \noindent\textit{3.3 Proof to lemma 3.3}
 

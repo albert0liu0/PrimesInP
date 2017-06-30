@@ -67,7 +67,7 @@
 
     $\mathbb{F}_p$表示$p$個元素的有限體，而$f(X)\equiv g(X)\pmod{h(X), p}$表示在$\mathbb{Z}_p[X]/(h(X))$上，$f(X)=g(X)$。\footnote{原論文中，作者強調$h(X)$須為不可約多項式，但論文中最常用到的是$\pmod{X^r-1, p}$，而$(X^r-1)$並非不可約多項式。}
 
-    $\phi(r)$表示小於$r$且與$r$互質的自然數個數，而對於$(a,r)=1$，$o_r(a)$表示在$\mathbb{Z}_r^*$中$a$的週期。顯然，$o_r(a)\mid\phi(r)$。
+    $\phi(r)$表示小於$r$且與$r$互質的自然數個數，而對於$(a,r)=1$，$o_r(a)$表示在$\mathbb{Z}_r^*$中$a$的週期。亦即，$o_r(a)=\min\{k|k\in\mathbb{N}, a^k\equiv 1\pmod{r}\}$。顯然，$o_r(a)\mid\phi(r)$。
 
 \section{Algorithm and Proof Sketch}
 \begin{mdframed}
